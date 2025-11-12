@@ -32,6 +32,27 @@ class Project extends Model
         'is_active' => 'boolean',
     ];
 
+    // Useful when you want to store price using integer in the db,
+    // but you want to manipulate data with float like euro
+    public function price(): Attribute
+    {
+        return Attribute::make(
+            // parameter value is the value in the db (use this syntax if you have price column)
+            get: fn ($value) => $value / 100,
+            // parameter value is the value set for the db
+            set: fn ($value) => (int) ($value * 100),
+        );
+    }
+
+    // You can make custom attribute
+    // You can call it like $project->long_description
+    public function longDescription(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name . ':' . $this->description,
+        );
+    }
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
