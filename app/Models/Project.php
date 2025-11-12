@@ -32,15 +32,6 @@ class Project extends Model
         'is_active' => 'boolean',
     ];
 
-    public function keywords(): Attribute
-    {
-        return Attribute::make(
-            set: function ($value) {
-                return json_encode($value);
-            }
-        );
-    }
-
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');

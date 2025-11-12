@@ -9,13 +9,16 @@ class HomeController extends Controller
 {
     public function __invoke(Request $request)
     {
-        /** @var User $user */
+        /** @var ?User $user */
         $user = auth()->user();
-        $user->loadMissing([
-            'projects' => function ($query) {
-                $query->active();
-            }
-        ]);
+        if ($user) {
+            $user->loadMissing([
+                'projects' => function ($query) {
+                    $query->active();
+                }
+            ]);
+        }
+
         return view('home', compact('user'));
     }
 }
