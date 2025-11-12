@@ -10,7 +10,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'slug' => 'required|min:8|unique:projects,slug,' . $this->route('project')->id,
+            'slug' => 'required|min:8|unique:projects,slug,' . $this->project->id,
             'description' => 'nullable',
             'is_active' => 'sometimes|required|in:on,0',
         ];
